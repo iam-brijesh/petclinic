@@ -39,21 +39,7 @@
     <maven-checkstyle.version>3.6.0</maven-checkstyle.version>
     <nohttp-checkstyle.version>0.0.11</nohttp-checkstyle.version>
     <spring-format.version>0.0.47</spring-format.version>
-    <testcontainers.version>1.19.7</testcontainers.version>
   </properties>
-
-  <!-- Added Dependency Management to define Testcontainers versions -->
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.testcontainers</groupId>
-        <artifactId>testcontainers-bom</artifactId>
-        <version>${testcontainers.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
 
   <dependencies>
     <!-- Spring Boot Starter Dependencies -->
@@ -164,14 +150,18 @@
       <artifactId>spring-boot-docker-compose</artifactId>
       <scope>test</scope>
     </dependency>
+
+    <!-- FIXED: Testcontainers with explicit version tags -->
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>testcontainers-junit-jupiter</artifactId>
+      <version>1.19.7</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>testcontainers-mysql</artifactId>
+      <version>1.19.7</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
