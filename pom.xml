@@ -151,16 +151,16 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- FIXED: Testcontainers with explicit version tags -->
+    <!-- FIXED: Correct Maven artifact IDs for Testcontainers -->
     <dependency>
       <groupId>org.testcontainers</groupId>
-      <artifactId>testcontainers-junit-jupiter</artifactId>
+      <artifactId>junit-jupiter</artifactId>
       <version>1.19.7</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
-      <artifactId>testcontainers-mysql</artifactId>
+      <artifactId>mysql</artifactId>
       <version>1.19.7</version>
       <scope>test</scope>
     </dependency>
