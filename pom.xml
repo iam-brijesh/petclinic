@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.2.5</version> <!-- Adjusted to a stable release version -->
+    <version>3.2.5</version>
+    <relativePath/> <!-- lookup parent from repository -->
   </parent>
 
   <groupId>org.springframework.samples</groupId>
@@ -14,8 +17,10 @@
   <packaging>war</packaging>
 
   <name>petclinic</name>
+  <description>Spring PetClinic Sample Application</description>
 
   <properties>
+    <!-- Generic properties -->
     <java.version>17</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -26,6 +31,7 @@
     <webjars-bootstrap.version>5.3.8</webjars-bootstrap.version>
     <webjars-font-awesome.version>4.7.0</webjars-font-awesome.version>
 
+    <!-- Build and code quality tools -->
     <checkstyle.version>12.3.1</checkstyle.version>
     <jacoco.version>0.8.15</jacoco.version>
     <libsass.version>0.3.4</libsass.version>
@@ -33,10 +39,24 @@
     <maven-checkstyle.version>3.6.0</maven-checkstyle.version>
     <nohttp-checkstyle.version>0.0.11</nohttp-checkstyle.version>
     <spring-format.version>0.0.47</spring-format.version>
+    <testcontainers.version>1.19.7</testcontainers.version>
   </properties>
 
+  <!-- Added Dependency Management to define Testcontainers versions -->
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.testcontainers</groupId>
+        <artifactId>testcontainers-bom</artifactId>
+        <version>${testcontainers.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <dependencies>
-    <!-- Core Spring Boot starters -->
+    <!-- Spring Boot Starter Dependencies -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
@@ -61,13 +81,15 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
+    
+    <!-- External Web Container Support for WAR deployment -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-tomcat</artifactId>
       <scope>provided</scope>
     </dependency>
 
-    <!-- Cache & Utilities -->
+    <!-- Cache & XML APIs -->
     <dependency>
       <groupId>javax.cache</groupId>
       <artifactId>cache-api</artifactId>
@@ -77,7 +99,7 @@
       <artifactId>jakarta.xml.bind-api</artifactId>
     </dependency>
 
-    <!-- Databases -->
+    <!-- Database Drivers & In-Memory Databases -->
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
@@ -99,7 +121,7 @@
       <scope>runtime</scope>
     </dependency>
 
-    <!-- WebJars -->
+    <!-- Frontend / WebJars -->
     <dependency>
       <groupId>org.webjars</groupId>
       <artifactId>webjars-locator-lite</artifactId>
@@ -119,14 +141,14 @@
       <scope>runtime</scope>
     </dependency>
 
-    <!-- DevTools -->
+    <!-- Development Tools -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-devtools</artifactId>
       <optional>true</optional>
     </dependency>
 
-    <!-- Testing -->
+    <!-- Testing Dependencies -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
@@ -156,6 +178,7 @@
 
   <build>
     <plugins>
+      <!-- Enforce Java Version Plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
@@ -177,6 +200,7 @@
         </executions>
       </plugin>
 
+      <!-- Spring Java Format Plugin -->
       <plugin>
         <groupId>io.spring.javaformat</groupId>
         <artifactId>spring-javaformat-maven-plugin</artifactId>
@@ -191,6 +215,7 @@
         </executions>
       </plugin>
 
+      <!-- Checkstyle Plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
@@ -225,11 +250,13 @@
         </executions>
       </plugin>
 
+      <!-- GraalVM Native Image Plugin -->
       <plugin>
         <groupId>org.graalvm.buildtools</groupId>
         <artifactId>native-maven-plugin</artifactId>
       </plugin>
 
+      <!-- Spring Boot Maven Plugin -->
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
@@ -250,6 +277,7 @@
         </executions>
       </plugin>
 
+      <!-- Jacoco Code Coverage Plugin -->
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
@@ -270,6 +298,7 @@
         </executions>
       </plugin>
 
+      <!-- Git Commit Info Plugin -->
       <plugin>
         <groupId>io.github.git-commit-id</groupId>
         <artifactId>git-commit-id-maven-plugin</artifactId>
@@ -279,9 +308,11 @@
         </configuration>
       </plugin>
 
+      <!-- CycloneDX SBOM Plugin -->
       <plugin>
         <groupId>org.cyclonedx</groupId>
         <artifactId>cyclonedx-maven-plugin</artifactId>
+        <version>2.8.0</version>
       </plugin>
     </plugins>
   </build>
@@ -294,6 +325,7 @@
   </licenses>
 
   <profiles>
+    <!-- Profile for SCSS Compilation -->
     <profile>
       <id>css</id>
       <build>
@@ -344,6 +376,7 @@
       </build>
     </profile>
 
+    <!-- Eclipse M2E Plugin Lifecycle Mapping Profile -->
     <profile>
       <id>m2e</id>
       <activation>
